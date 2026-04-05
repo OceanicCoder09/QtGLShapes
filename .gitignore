@@ -1,7 +1,0 @@
-.vs/
-out/
-build/
-CMakeUserPresets.json
-*.user
-*.suo
-*.sln
