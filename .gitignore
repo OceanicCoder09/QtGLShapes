@@ -5,3 +5,8 @@ CMakeUserPresets.json
 *.user
 *.suo
 *.sln
+debug/
+release/
+*.stash
+*.pro.user
+build/
