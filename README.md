@@ -82,3 +82,11 @@ A modern C++ Qt and OpenGL application that allows users to interactively draw, 
 * Right-click + drag → rotate  
 
 ---
+---
+
+## 👨‍💻 Author
+
+**OceanicCoder09**  
+🔗 GitHub: https://github.com/OceanicCoder09
+
+---
