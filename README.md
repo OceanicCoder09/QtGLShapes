@@ -1,4 +1,4 @@
-# 🎯 2D to 3D Shape Transformer
+# 🎯 2D to 3D Shape Transformer - FreeCAD
 
 A modern C++ Qt and OpenGL application that allows users to interactively draw, transform, and convert 2D geometric shapes into fully operational 3D objects.
 
