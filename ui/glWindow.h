@@ -1,15 +1,15 @@
-#ifndef GLWIDGET_H
-#define GLWIDGET_H
+#ifndef GLWINDOW_H
+#define GLWINDOW_H
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include "Shape.h"
 
-class GLWidget : public QOpenGLWidget, protected QOpenGLFunctions {
+class glWindow : public QOpenGLWidget, protected QOpenGLFunctions {
     Q_OBJECT
 public:
-    explicit GLWidget(QWidget *parent = nullptr);
-    ~GLWidget() override;
+    explicit glWindow(QWidget *parent = nullptr);
+    ~glWindow() override;
 
     void setPendingShapeType(int type); 
     void clearShape();

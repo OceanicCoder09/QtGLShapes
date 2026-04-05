@@ -14,8 +14,8 @@ add_executable(2DShapesTransform
     main.cpp
     ui/MainWindow.cpp
     ui/MainWindow.h
-    ui/GLWidget.cpp
-    ui/GLWidget.h
+    ui/glWindow.cpp
+    ui/glWindow.h
     shapes/Shape.cpp
     shapes/Shape.h
     shapes/ShapeRenderer.cpp

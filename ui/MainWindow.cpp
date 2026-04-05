@@ -1,5 +1,5 @@
 #include "MainWindow.h"
-#include "GLWidget.h"
+#include "glWindow.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     
     mainLayout->addLayout(topLayout);
     
-    glWidget = new GLWidget(this);
+    glWidget = new glWindow(this);
     mainLayout->addWidget(glWidget);
 
     connect(shapeCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(onShapeSelectionChanged(int)));

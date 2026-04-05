@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-class GLWidget;
+class glWindow;
 class QComboBox;
 
 class MainWindow : public QMainWindow {
@@ -19,7 +19,7 @@ private slots:
     void onConvertTo3DClicked();
 
 private:
-    GLWidget *glWidget;
+    glWindow *glWidget;
     QComboBox *shapeCombo;
 };
 

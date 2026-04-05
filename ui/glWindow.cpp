@@ -1,4 +1,4 @@
-#include "GLWidget.h"
+#include "glWindow.h"
 #include <QMouseEvent>
 #include <QWheelEvent>
 #include <cmath>
@@ -12,28 +12,28 @@
 #include "Circle.h"
 #include "Transformations.h"
 
-GLWidget::GLWidget(QWidget *parent)
+glWindow::glWindow(QWidget *parent)
     : QOpenGLWidget(parent), currentShape(nullptr), isDragging(false), isScaling(false), isRotating(false), selectedVertexIndex(-1), xRot(30.0f), yRot(-30.0f), pendingShapeType(0) {
     setFocusPolicy(Qt::StrongFocus);
 }
 
-GLWidget::~GLWidget() {
+glWindow::~glWindow() {
     if (currentShape != nullptr) {
         delete currentShape;
     }
 }
 
-void GLWidget::initializeGL() {
+void glWindow::initializeGL() {
     initializeOpenGLFunctions();
     glClearColor(0.15f, 0.15f, 0.20f, 1.0f);
     glEnable(GL_DEPTH_TEST);
 }
 
-void GLWidget::resizeGL(int w, int h) {
+void glWindow::resizeGL(int w, int h) {
     glViewport(0, 0, w, h);
 }
 
-void GLWidget::paintGL() {
+void glWindow::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (currentShape != nullptr) {
         auto gl = QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_1_1>(QOpenGLContext::currentContext());
@@ -52,11 +52,11 @@ void GLWidget::paintGL() {
     }
 }
 
-void GLWidget::setPendingShapeType(int type) {
+void glWindow::setPendingShapeType(int type) {
     pendingShapeType = type;
 }
 
-void GLWidget::clearShape() {
+void glWindow::clearShape() {
     if (currentShape != nullptr) {
         delete currentShape;
         currentShape = nullptr;
@@ -64,20 +64,20 @@ void GLWidget::clearShape() {
     update(); 
 }
 
-void GLWidget::convertTo3D() {
+void glWindow::convertTo3D() {
     if (currentShape != nullptr && !currentShape->get3D()) {
         currentShape->set3D(true);
         update();
     }
 }
 
-Point2D GLWidget::mapToGL(int x, int y) {
+Point2D glWindow::mapToGL(int x, int y) {
     float normalized_x = (2.0f * x / width()) - 1.0f;
     float normalized_y = 1.0f - (2.0f * y / height());
     return {normalized_x, normalized_y};
 }
 
-void GLWidget::mousePressEvent(QMouseEvent *event) {
+void glWindow::mousePressEvent(QMouseEvent *event) {
     Point2D glPos = mapToGL(event->pos().x(), event->pos().y());
     
     if (event->button() == Qt::RightButton && currentShape != nullptr && currentShape->get3D()) {
@@ -150,7 +150,7 @@ void GLWidget::mousePressEvent(QMouseEvent *event) {
     }
 }
 
-void GLWidget::mouseMoveEvent(QMouseEvent *event) {
+void glWindow::mouseMoveEvent(QMouseEvent *event) {
     if (currentShape == nullptr) return;
 
     if (isRotating) {
@@ -205,7 +205,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event) {
     }
 }
 
-void GLWidget::mouseReleaseEvent(QMouseEvent *event) {
+void glWindow::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         isDragging = false;
         isScaling = false;
@@ -215,11 +215,11 @@ void GLWidget::mouseReleaseEvent(QMouseEvent *event) {
     }
 }
 
-void GLWidget::wheelEvent(QWheelEvent *event) {
+void glWindow::wheelEvent(QWheelEvent *event) {
     Q_UNUSED(event);
 }
 
-void GLWidget::keyPressEvent(QKeyEvent *event) {
+void glWindow::keyPressEvent(QKeyEvent *event) {
     Q_UNUSED(event);
     // Add custom key handling logic here if needed
     // Example: if (event->key() == Qt::Key_Delete) clearShape();
