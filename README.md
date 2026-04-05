@@ -30,33 +30,32 @@ A modern C++ Qt and OpenGL application that allows users to interactively draw, 
 
 ### 🔺 Triangle (2D)
 
-![Triangle](img/Screenshot%202026-04-05%20123545.png)
+![Triangle](img/triangle_2d.png)
 
 ### 🔺 Triangle (3D)
 
-![Triangle 3D](img/Screenshot%202026-04-05%20123642.png)
+![Triangle 3D](img/triangle_3d.png)
 
 ### 🔷 Square
 
-![Square](img/Screenshot%202026-04-05%20123720.png)
+![Square](img/square_2d.png)
 
 ### 🔶 Rectangle
 
-![Rectangle](img/Screenshot%202026-04-05%20123751.png)
+![Rectangle](img/rectangle_2d.png)
 
 ### 🧊 Cube (3D Output)
 
-![Cube](img/Screenshot%202026-04-05%20123826.png)
+![Cube](img/cube.png)
 
 ### 🔵 Circle (2D)
 
-![Circle](img/Screenshot%202026-04-05%20124152.png)
+![Circle](img/circle.png)
 
-### 🔵 Circle (3D Extrusion)
+### 🔵 Cylinder (3D Extrusion)
 
-![Circle 3D](img/Screenshot%202026-04-05%20124222.png)
+![Cylinder](img/cylinder.png)
 
----
 
 ## 🛠️ Build Requirements
 
