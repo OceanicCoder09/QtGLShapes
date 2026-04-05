@@ -56,33 +56,21 @@ A modern C++ Qt and OpenGL application that allows users to interactively draw, 
 ## ⚙️ Setup & Installation
 
 ```bash
-git clone https://github.com/OceanicCoder09/QtGLShapes.git
-
-### Using Qt Creator (.pro file)
-
-1. Open **Qt Creator**
-2. Click **Open Project**
-3. Select `2DShapesTransform.pro`
-4. Configure kit (Qt 6)
-5. Click **Build & Run**
-
----
-
-### Using Visual Studio (Qt Extension)
-
-1. Open Visual Studio
-2. Install **Qt VS Tools**
-3. Open `.pro` file or convert to VS project
-4. Build and run
-
----
-
-## 🎮 Usage Guide
-
-1. Select shape from dropdown  
-2. Left-click to create  
-3. Drag center → move  
-4. Drag vertex → scale  
-5. Click **Convert to 3D**  
-6. Right-click + drag → rotate  
-
+Using Qt Creator (.pro file)
+Open Qt Creator
+Click Open Project
+Select 2DShapesTransform.pro
+Configure kit (Qt 6)
+Click Build & Run
+Using Visual Studio (Qt Extension)
+Open Visual Studio
+Install Qt VS Tools
+Open .pro file or convert to VS project
+Build and run
+🎮 Usage Guide
+Select shape from dropdown
+Left-click to create
+Drag center → move
+Drag vertex → scale
+Click Convert to 3D
+Right-click + drag → rotate
