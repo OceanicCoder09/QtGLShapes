@@ -4,12 +4,6 @@ A modern C++ Qt and OpenGL application that allows users to interactively draw, 
 
 ---
 
-## 📸 Application Preview
-
-![App Preview](img/Screenshot%202026-04-05%20123545.png)
-
----
-
 ## 🚀 Overview & Features
 
 * **Interactive 2D Shapes**: Generate primitives including Triangles, Squares, Rectangles, and Circles.
