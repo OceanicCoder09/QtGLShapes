@@ -1,8 +1,6 @@
 #include "glWindow.h"
 #include <QMouseEvent>
-#include <QWheelEvent>
 #include <cmath>
-#include <QKeyEvent>
 #include <QOpenGLVersionFunctionsFactory>
 #include <QOpenGLFunctions_1_1>
 #include <QOpenGLContext>
@@ -11,6 +9,7 @@
 #include "RectangleShape.h"
 #include "Circle.h"
 #include "Transformations.h"
+#include "MeshExtruder.h"
 
 glWindow::glWindow(QWidget *parent)
     : QOpenGLWidget(parent), currentShape(nullptr), isDragging(false), isScaling(false), isRotating(false), selectedVertexIndex(-1), xRot(30.0f), yRot(-30.0f), pendingShapeType(0) {
@@ -69,6 +68,19 @@ void glWindow::convertTo3D() {
         currentShape->set3D(true);
         update();
     }
+}
+
+bool glWindow::exportToSTL(const QString& filePath) {
+    if (currentShape == nullptr) return false;
+    
+    // Extrude the current 2D shape using its set depth
+    // If it's a 2D shape being exported, we can just give it a default depth (e.g. 0.5f)
+    float depth = currentShape->get3D() ? currentShape->getDepth() : 0.5f;
+    bool isSphere = (dynamic_cast<Circle*>(currentShape) != nullptr);
+    DataClass mesh = MeshExtruder::extrude(currentShape->getVertices(), depth, isSphere);
+    
+    // Export the constructed mesh
+    return mesh.exportSTL(filePath.toStdString());
 }
 
 Point2D glWindow::mapToGL(int x, int y) {
@@ -213,14 +225,4 @@ void glWindow::mouseReleaseEvent(QMouseEvent *event) {
     } else if (event->button() == Qt::RightButton) {
         isRotating = false;
     }
-}
-
-void glWindow::wheelEvent(QWheelEvent *event) {
-    Q_UNUSED(event);
-}
-
-void glWindow::keyPressEvent(QKeyEvent *event) {
-    Q_UNUSED(event);
-    // Add custom key handling logic here if needed
-    // Example: if (event->key() == Qt::Key_Delete) clearShape();
 }

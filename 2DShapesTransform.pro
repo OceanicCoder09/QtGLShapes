@@ -16,7 +16,9 @@ SOURCES += \
     shapes/Square.cpp \
     shapes/RectangleShape.cpp \
     shapes/Circle.cpp \
-    operations/Transformations.cpp
+    operations/Transformations.cpp \
+    operations/MeshExtruder.cpp \
+    operations/DataClass.cpp
 
 HEADERS += \
     ui/MainWindow.h \
@@ -27,4 +29,6 @@ HEADERS += \
     shapes/Square.h \
     shapes/RectangleShape.h \
     shapes/Circle.h \
-    operations/Transformations.h
+    operations/Transformations.h \
+    operations/MeshExtruder.h \
+    operations/DataClass.h
