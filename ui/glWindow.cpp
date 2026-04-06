@@ -10,6 +10,7 @@
 #include "Circle.h"
 #include "Transformations.h"
 #include "MeshExtruder.h"
+#include "STLExporter.h"
 
 glWindow::glWindow(QWidget *parent)
     : QOpenGLWidget(parent), currentShape(nullptr), isDragging(false), isScaling(false), isRotating(false), selectedVertexIndex(-1), xRot(30.0f), yRot(-30.0f), pendingShapeType(0) {
@@ -80,7 +81,7 @@ bool glWindow::exportToSTL(const QString& filePath) {
     DataClass mesh = MeshExtruder::extrude(currentShape->getVertices(), depth, isSphere);
     
     // Export the constructed mesh
-    return mesh.exportSTL(filePath.toStdString());
+    return STLExporter::exportToAsciiSTL(mesh, filePath.toStdString());
 }
 
 Point2D glWindow::mapToGL(int x, int y) {

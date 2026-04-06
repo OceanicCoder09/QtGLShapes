@@ -54,6 +54,9 @@
     <ClCompile Include="operations\DataClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="operations\STLExporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="shapes\Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -90,6 +93,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="operations\DataClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operations\Vertex3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operations\Triangle3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operations\STLExporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shapes\Triangle.h">

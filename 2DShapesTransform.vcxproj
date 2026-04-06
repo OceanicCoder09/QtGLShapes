@@ -150,6 +150,7 @@
     <ClCompile Include="operations\Transformations.cpp" />
     <ClCompile Include="operations\MeshExtruder.cpp" />
     <ClCompile Include="operations\DataClass.cpp" />
+    <ClCompile Include="operations\STLExporter.cpp" />
     <ClCompile Include="shapes\Triangle.cpp" />
     <ClCompile Include="ui\glWindow.cpp" />
     <ClCompile Include="main.cpp" />
@@ -173,6 +174,9 @@
     <ClInclude Include="operations\Transformations.h" />
     <ClInclude Include="operations\MeshExtruder.h" />
     <ClInclude Include="operations\DataClass.h" />
+    <ClInclude Include="operations\Vertex3D.h" />
+    <ClInclude Include="operations\Triangle3D.h" />
+    <ClInclude Include="operations\STLExporter.h" />
     <ClInclude Include="shapes\Triangle.h" />
     <CustomBuild Include="ui\glWindow.h">
       <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;">ui\glWindow.h;release\moc_predefs.h;C:\Qt\6.10.2\msvc2022_64\bin\moc.exe;%(AdditionalInputs)</AdditionalInputs>

@@ -3,21 +3,14 @@
 
 #include <vector>
 #include <string>
-
-struct Vertex3D {
-    float x, y, z;
-};
-
-struct Triangle3D {
-    Vertex3D v1, v2, v3;
-};
+#include "Vertex3D.h"
+#include "Triangle3D.h"
 
 class DataClass {
 public:
     std::vector<Triangle3D> triangles;
 
     void loadSTL(std::string filename);
-    bool exportSTL(std::string filename) const;
 };
 
 #endif // DATACLASS_H

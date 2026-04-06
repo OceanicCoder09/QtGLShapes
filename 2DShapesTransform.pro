@@ -18,7 +18,8 @@ SOURCES += \
     shapes/Circle.cpp \
     operations/Transformations.cpp \
     operations/MeshExtruder.cpp \
-    operations/DataClass.cpp
+    operations/DataClass.cpp \
+    operations/STLExporter.cpp
 
 HEADERS += \
     ui/MainWindow.h \
@@ -31,4 +32,7 @@ HEADERS += \
     shapes/Circle.h \
     operations/Transformations.h \
     operations/MeshExtruder.h \
-    operations/DataClass.h
+    operations/DataClass.h \
+    operations/Vertex3D.h \
+    operations/Triangle3D.h \
+    operations/STLExporter.h
