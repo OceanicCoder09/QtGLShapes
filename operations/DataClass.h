@@ -10,7 +10,6 @@ class DataClass {
 public:
     std::vector<Triangle3D> triangles;
 
-    void loadSTL(std::string filename);
 };
 
 #endif // DATACLASS_H

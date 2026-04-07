@@ -11,6 +11,7 @@
 #include "Transformations.h"
 #include "MeshExtruder.h"
 #include "STLExporter.h"
+#include "STLImporter.h"
 
 glWindow::glWindow(QWidget *parent)
     : QOpenGLWidget(parent), currentShape(nullptr), loadedMesh(nullptr), isDragging(false), isScaling(false), isRotating(false), selectedVertexIndex(-1), xRot(30.0f), yRot(-30.0f), pendingShapeType(0) {
@@ -113,7 +114,10 @@ void glWindow::clearShape() {
 void glWindow::importSTL(const QString& filePath) {
     clearShape();
     loadedMesh = new DataClass();
-    loadedMesh->loadSTL(filePath.toStdString());
+    if (!STLImporter::importFromAsciiSTL(filePath.toStdString(), *loadedMesh)) {
+        delete loadedMesh;
+        loadedMesh = nullptr;
+    }
     update();
 }
 
@@ -125,13 +129,10 @@ void glWindow::convertTo3D() {
 }
 
 bool glWindow::exportToSTL(const QString& filePath) {
-    if (currentShape == nullptr) return false;
+    if (currentShape == nullptr || !currentShape->get3D()) return false;
     
-    // Extrude the current 2D shape using its set depth
-    // If it's a 2D shape being exported, we can just give it a default depth (e.g. 0.5f)
-    float depth = currentShape->get3D() ? currentShape->getDepth() : 0.5f;
-    bool isSphere = (dynamic_cast<Circle*>(currentShape) != nullptr);
-    DataClass mesh = MeshExtruder::extrude(currentShape->getVertices(), depth, isSphere);
+    // Extrude the current 2D shape using its set depth using the unified getGeneratedMesh method
+    DataClass mesh = currentShape->getGeneratedMesh();
     
     // Export the constructed mesh
     return STLExporter::exportToAsciiSTL(mesh, filePath.toStdString());

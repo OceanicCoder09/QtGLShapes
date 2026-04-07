@@ -13,3 +13,10 @@ Circle::Circle() {
         vertices.push_back({radius * std::cos(angle), radius * std::sin(angle)});
     }
 }
+
+#include "MeshExtruder.h"
+
+DataClass Circle::getGeneratedMesh() const {
+    float d = is3D ? depth : 0.0f;
+    return MeshExtruder::extrude(vertices, d, true);
+}

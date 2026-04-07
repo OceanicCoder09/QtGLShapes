@@ -57,6 +57,9 @@
     <ClCompile Include="operations\STLExporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="operations\STLImporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="shapes\Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="operations\STLExporter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operations\STLImporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shapes\Triangle.h">

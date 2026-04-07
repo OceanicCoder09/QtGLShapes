@@ -75,7 +75,7 @@ void MainWindow::onExportSTLClicked() {
     if (glWidget->exportToSTL(fileName)) {
         QMessageBox::information(this, tr("Export Successful"), tr("Successfully exported 3D shape to STL file."));
     } else {
-        QMessageBox::warning(this, tr("Export Failed"), tr("Could not export shape. Please ensure you have placed a shape."));
+        QMessageBox::warning(this, tr("Export Failed"), tr("Could not export shape. Please ensure you have placed a shape and converted it to 3D first."));
     }
 }
 

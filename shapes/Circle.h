@@ -6,6 +6,7 @@
 class Circle : public Shape {
 public:
     Circle();
+    virtual DataClass getGeneratedMesh() const override;
 };
 
 #endif // CIRCLE_H

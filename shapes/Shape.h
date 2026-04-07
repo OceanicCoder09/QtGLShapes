@@ -2,6 +2,7 @@
 #define SHAPE_H
 
 #include <vector>
+#include "DataClass.h" // Added so the compiler knows what a mesh is
 
 struct Point2D {
     float x, y;
@@ -12,6 +13,9 @@ public:
     virtual ~Shape() = default;
     
     virtual void draw() const;
+
+    // Added this virtual function so the Renderer can call it
+    virtual DataClass getGeneratedMesh() const;
 
     bool contains(float x, float y) const;
     int getVertexIndexAt(float x, float y, float threshold = 0.05f) const;
@@ -32,4 +36,4 @@ protected:
     float depth = 0.5f;
 };
 
-#endif 
+#endif
