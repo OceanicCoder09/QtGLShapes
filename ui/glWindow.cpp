@@ -128,6 +128,10 @@ void glWindow::convertTo3D() {
     }
 }
 
+bool glWindow::canExport() const {
+    return currentShape != nullptr && currentShape->get3D();
+}
+
 bool glWindow::exportToSTL(const QString& filePath) {
     if (currentShape == nullptr || !currentShape->get3D()) return false;
     

@@ -15,6 +15,7 @@ public:
     void setPendingShapeType(int type); 
     void clearShape();
     void convertTo3D();
+    bool canExport() const;
     bool exportToSTL(const QString& filePath);
     void importSTL(const QString& filePath);
 

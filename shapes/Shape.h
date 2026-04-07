@@ -2,8 +2,7 @@
 #define SHAPE_H
 
 #include <vector>
-#include "DataClass.h" // Added so the compiler knows what a mesh is
-
+#include "DataClass.h" 
 struct Point2D {
     float x, y;
 };
@@ -14,7 +13,6 @@ public:
     
     virtual void draw() const;
 
-    // Added this virtual function so the Renderer can call it
     virtual DataClass getGeneratedMesh() const;
 
     bool contains(float x, float y) const;

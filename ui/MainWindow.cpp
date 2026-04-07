@@ -67,6 +67,11 @@ void MainWindow::onConvertTo3DClicked() {
 }
 
 void MainWindow::onExportSTLClicked() {
+    if (!glWidget->canExport()) {
+        QMessageBox::warning(this, tr("Export Failed"), tr("Could not export shape. Please ensure you have placed a shape and converted it to 3D first."));
+        return;
+    }
+
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save ASCII STL"), "", tr("STL Files (*.stl);;All Files (*)"));
     if (fileName.isEmpty()) {
         return;
@@ -75,7 +80,7 @@ void MainWindow::onExportSTLClicked() {
     if (glWidget->exportToSTL(fileName)) {
         QMessageBox::information(this, tr("Export Successful"), tr("Successfully exported 3D shape to STL file."));
     } else {
-        QMessageBox::warning(this, tr("Export Failed"), tr("Could not export shape. Please ensure you have placed a shape and converted it to 3D first."));
+        QMessageBox::warning(this, tr("Export Failed"), tr("Could not save the STL file. Make sure you have write permissions."));
     }
 }
 
