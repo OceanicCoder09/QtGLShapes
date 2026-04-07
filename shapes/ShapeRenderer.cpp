@@ -11,34 +11,6 @@ void ShapeRenderer::draw(const Shape* shape) {
     auto gl = QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_1_1>(QOpenGLContext::currentContext());
     if (gl == nullptr) return;
 
-    if (!shape->get3D()) {
-        const auto& vertices = shape->getVerticesConst();
-
-        gl->glColor3f(0.2f, 0.6f, 1.0f);
-        gl->glBegin(GL_POLYGON);
-        for (int i = 0; i < vertices.size(); i++) {
-            gl->glVertex2f(vertices[i].x, vertices[i].y);
-        }
-        gl->glEnd();
-
-        gl->glColor3f(1.0f, 1.0f, 1.0f);
-        gl->glLineWidth(2.0f);
-        gl->glBegin(GL_LINE_LOOP);
-        for (int i = 0; i < vertices.size(); i++) {
-            gl->glVertex2f(vertices[i].x, vertices[i].y);
-        }
-        gl->glEnd();
-
-        gl->glPointSize(8.0f);
-        gl->glColor3f(1.0f, 0.4f, 0.4f);
-        gl->glBegin(GL_POINTS);
-        for (int i = 0; i < vertices.size(); i++) {
-            gl->glVertex2f(vertices[i].x, vertices[i].y);
-        }
-        gl->glEnd();
-        
-        return;
-    }
 
     // Get the Triangulation DS
     DataClass mesh = shape->getGeneratedMesh();

@@ -1,19 +1,17 @@
 #include "Shape.h"
 #include "ShapeRenderer.h"
-#include "MeshExtruder.h" // Added to perform the 3D triangulation
+#include "MeshExtruder.h" 
 #include <cmath>
 
 void Shape::draw() const {
     ShapeRenderer::draw(this);
 }
 
-// Added implementation: This builds the DS for the Renderer
+
 DataClass Shape::getGeneratedMesh() const {
-    // If it's not 3D, we can still return a 'flat' mesh with 0 depth
+   
     float d = is3D ? depth : 0.0f;
-    
-    // We pass 'false' for isSphere by default. 
-    // Specific classes like Circle can override this if needed.
+   
     return MeshExtruder::extrude(vertices, d, false);
 }
 

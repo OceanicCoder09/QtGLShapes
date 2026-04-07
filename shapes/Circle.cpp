@@ -18,5 +18,5 @@ Circle::Circle() {
 
 DataClass Circle::getGeneratedMesh() const {
     float d = is3D ? depth : 0.0f;
-    return MeshExtruder::extrude(vertices, d, true);
+    return MeshExtruder::extrude(vertices, d, is3D);
 }
