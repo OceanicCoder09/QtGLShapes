@@ -8,7 +8,9 @@
 #include "Square.h"
 #include "RectangleShape.h"
 #include "Circle.h"
-#include "Transformations.h"
+#include "Translation.h"
+#include "Scaling.h"
+#include "Rotation.h"
 #include "MeshExtruder.h"
 #include "STLExporter.h"
 #include "STLImporter.h"
@@ -223,7 +225,7 @@ void glWindow::mousePressEvent(QMouseEvent *event) {
             currentShape = new Circle();
         }
         
-        TranslateShape(currentShape, glPos.x, glPos.y);
+        Translation::apply(currentShape, glPos.x, glPos.y);
         update(); 
     }
 }
@@ -235,8 +237,7 @@ void glWindow::mouseMoveEvent(QMouseEvent *event) {
         int dx = event->pos().x() - lastMousePos.x();
         int dy = event->pos().y() - lastMousePos.y();
         
-        xRot += dy * 0.5f;
-        yRot += dx * 0.5f;
+        Rotation::apply3D(xRot, yRot, dx, dy);
         
         lastMousePos = event->pos();
         update();
@@ -244,27 +245,10 @@ void glWindow::mouseMoveEvent(QMouseEvent *event) {
         Point2D currentGL = mapToGL(event->pos().x(), event->pos().y());
         Point2D lastGL = mapToGL(lastMousePos.x(), lastMousePos.y());
         
-        Point2D center = currentShape->getCenter();
-        Point2D selectedPos = currentShape->getVertices()[selectedVertexIndex];
-        Point2D fixedPoint = { 2.0f * center.x - selectedPos.x, 2.0f * center.y - selectedPos.y };
-        
-        float dxOld = lastGL.x - fixedPoint.x;
-        float dyOld = lastGL.y - fixedPoint.y;
-        float oldDist = std::sqrt(dxOld*dxOld + dyOld*dyOld);
-        
-        float dxNew = currentGL.x - fixedPoint.x;
-        float dyNew = currentGL.y - fixedPoint.y;
-        float newDist = std::sqrt(dxNew*dxNew + dyNew*dyNew);
-        
-        if (oldDist > 0.001f) {
-            float factor = newDist / oldDist;
-            for (auto& v : currentShape->getVertices()) {
-                v.x = fixedPoint.x + (v.x - fixedPoint.x) * factor;
-                v.y = fixedPoint.y + (v.y - fixedPoint.y) * factor;
-            }
-            if (currentShape->get3D()) {
-                currentShape->setDepth(currentShape->getDepth() * factor);
-            }
+        if (currentShape->get3D()) {
+            Scaling::apply3D(currentShape, selectedVertexIndex, currentGL, lastGL);
+        } else {
+            Scaling::apply(currentShape, selectedVertexIndex, currentGL, lastGL);
         }
         
         lastMousePos = event->pos();
@@ -276,7 +260,11 @@ void glWindow::mouseMoveEvent(QMouseEvent *event) {
         float dx = currentGL.x - lastGL.x;
         float dy = currentGL.y - lastGL.y;
         
-        TranslateShape(currentShape, dx, dy);
+        if (currentShape->get3D()) {
+            Translation::apply3D(currentShape, dx, dy, 0.0f);
+        } else {
+            Translation::apply(currentShape, dx, dy);
+        }
         
         lastMousePos = event->pos();
         update(); 

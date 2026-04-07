@@ -45,7 +45,13 @@
     <ClCompile Include="shapes\Square.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="operations\Transformations.cpp">
+    <ClCompile Include="operations\Translation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operations\Scaling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="operations\Rotation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="operations\MeshExtruder.cpp">
@@ -89,7 +95,13 @@
     <ClInclude Include="shapes\Square.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="operations\Transformations.h">
+    <ClInclude Include="operations\Translation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operations\Scaling.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="operations\Rotation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="operations\MeshExtruder.h">

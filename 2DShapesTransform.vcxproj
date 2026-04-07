@@ -147,7 +147,9 @@
     <ClCompile Include="shapes\Shape.cpp" />
     <ClCompile Include="shapes\ShapeRenderer.cpp" />
     <ClCompile Include="shapes\Square.cpp" />
-    <ClCompile Include="operations\Transformations.cpp" />
+    <ClCompile Include="operations\Translation.cpp" />
+    <ClCompile Include="operations\Scaling.cpp" />
+    <ClCompile Include="operations\Rotation.cpp" />
     <ClCompile Include="operations\MeshExtruder.cpp" />
     <ClCompile Include="operations\DataClass.cpp" />
     <ClCompile Include="operations\STLExporter.cpp" />
@@ -172,7 +174,9 @@
     <ClInclude Include="shapes\Shape.h" />
     <ClInclude Include="shapes\ShapeRenderer.h" />
     <ClInclude Include="shapes\Square.h" />
-    <ClInclude Include="operations\Transformations.h" />
+    <ClInclude Include="operations\Translation.h" />
+    <ClInclude Include="operations\Scaling.h" />
+    <ClInclude Include="operations\Rotation.h" />
     <ClInclude Include="operations\MeshExtruder.h" />
     <ClInclude Include="operations\DataClass.h" />
     <ClInclude Include="operations\Vertex3D.h" />
