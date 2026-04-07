@@ -13,13 +13,16 @@
 #include "STLExporter.h"
 
 glWindow::glWindow(QWidget *parent)
-    : QOpenGLWidget(parent), currentShape(nullptr), isDragging(false), isScaling(false), isRotating(false), selectedVertexIndex(-1), xRot(30.0f), yRot(-30.0f), pendingShapeType(0) {
+    : QOpenGLWidget(parent), currentShape(nullptr), loadedMesh(nullptr), isDragging(false), isScaling(false), isRotating(false), selectedVertexIndex(-1), xRot(30.0f), yRot(-30.0f), pendingShapeType(0) {
     setFocusPolicy(Qt::StrongFocus);
 }
 
 glWindow::~glWindow() {
     if (currentShape != nullptr) {
         delete currentShape;
+    }
+    if (loadedMesh != nullptr) {
+        delete loadedMesh;
     }
 }
 
@@ -49,6 +52,45 @@ void glWindow::paintGL() {
         if (gl && currentShape->get3D()) {
             gl->glPopMatrix();
         }
+    } else if (loadedMesh != nullptr) {
+        auto gl = QOpenGLVersionFunctionsFactory::get<QOpenGLFunctions_1_1>(QOpenGLContext::currentContext());
+        if (gl) {
+            gl->glPushMatrix();
+            gl->glRotatef(xRot, 1.0f, 0.0f, 0.0f);
+            gl->glRotatef(yRot, 0.0f, 1.0f, 0.0f);
+            
+            gl->glBegin(GL_TRIANGLES);
+            for (const auto& tri : loadedMesh->triangles) {
+                // Apply a spatial rainbow color to each vertex
+                gl->glColor3f((std::sin(tri.v1.x * 2.0f) * 0.5f + 0.5f), 
+                              (std::cos(tri.v1.y * 2.0f) * 0.5f + 0.5f), 
+                              (std::sin(tri.v1.z * 2.0f + 1.0f) * 0.5f + 0.5f));
+                gl->glVertex3f(tri.v1.x, tri.v1.y, tri.v1.z);
+                
+                gl->glColor3f((std::sin(tri.v2.x * 2.0f) * 0.5f + 0.5f), 
+                              (std::cos(tri.v2.y * 2.0f) * 0.5f + 0.5f), 
+                              (std::sin(tri.v2.z * 2.0f + 1.0f) * 0.5f + 0.5f));
+                gl->glVertex3f(tri.v2.x, tri.v2.y, tri.v2.z);
+                
+                gl->glColor3f((std::sin(tri.v3.x * 2.0f) * 0.5f + 0.5f), 
+                              (std::cos(tri.v3.y * 2.0f) * 0.5f + 0.5f), 
+                              (std::sin(tri.v3.z * 2.0f + 1.0f) * 0.5f + 0.5f));
+                gl->glVertex3f(tri.v3.x, tri.v3.y, tri.v3.z);
+            }
+            gl->glEnd();
+
+            gl->glColor3f(0.2f, 0.2f, 0.2f);
+            gl->glLineWidth(1.0f);
+            gl->glBegin(GL_LINES);
+            for (const auto& tri : loadedMesh->triangles) {
+                gl->glVertex3f(tri.v1.x, tri.v1.y, tri.v1.z); gl->glVertex3f(tri.v2.x, tri.v2.y, tri.v2.z);
+                gl->glVertex3f(tri.v2.x, tri.v2.y, tri.v2.z); gl->glVertex3f(tri.v3.x, tri.v3.y, tri.v3.z);
+                gl->glVertex3f(tri.v3.x, tri.v3.y, tri.v3.z); gl->glVertex3f(tri.v1.x, tri.v1.y, tri.v1.z);
+            }
+            gl->glEnd();
+
+            gl->glPopMatrix();
+        }
     }
 }
 
@@ -61,7 +103,18 @@ void glWindow::clearShape() {
         delete currentShape;
         currentShape = nullptr;
     }
+    if (loadedMesh != nullptr) {
+        delete loadedMesh;
+        loadedMesh = nullptr;
+    }
     update(); 
+}
+
+void glWindow::importSTL(const QString& filePath) {
+    clearShape();
+    loadedMesh = new DataClass();
+    loadedMesh->loadSTL(filePath.toStdString());
+    update();
 }
 
 void glWindow::convertTo3D() {
@@ -93,10 +146,12 @@ Point2D glWindow::mapToGL(int x, int y) {
 void glWindow::mousePressEvent(QMouseEvent *event) {
     Point2D glPos = mapToGL(event->pos().x(), event->pos().y());
     
-    if (event->button() == Qt::RightButton && currentShape != nullptr && currentShape->get3D()) {
-        isRotating = true;
-        lastMousePos = event->pos();
-        return;
+    if (event->button() == Qt::RightButton) {
+        if ((currentShape != nullptr && currentShape->get3D()) || loadedMesh != nullptr) {
+            isRotating = true;
+            lastMousePos = event->pos();
+            return;
+        }
     }
     
     if (event->button() == Qt::LeftButton) {
@@ -138,6 +193,11 @@ void glWindow::mousePressEvent(QMouseEvent *event) {
             }
         }
         
+        if (loadedMesh != nullptr) {
+            delete loadedMesh;
+            loadedMesh = nullptr;
+        }
+
         // Prevent deleting current 3D shape when missing
         if (currentShape != nullptr && currentShape->get3D()) {
             return;
@@ -164,7 +224,7 @@ void glWindow::mousePressEvent(QMouseEvent *event) {
 }
 
 void glWindow::mouseMoveEvent(QMouseEvent *event) {
-    if (currentShape == nullptr) return;
+    if (currentShape == nullptr && loadedMesh == nullptr) return;
 
     if (isRotating) {
         int dx = event->pos().x() - lastMousePos.x();
@@ -175,7 +235,7 @@ void glWindow::mouseMoveEvent(QMouseEvent *event) {
         
         lastMousePos = event->pos();
         update();
-    } else if (isScaling && selectedVertexIndex != -1) {
+    } else if (isScaling && selectedVertexIndex != -1 && currentShape != nullptr) {
         Point2D currentGL = mapToGL(event->pos().x(), event->pos().y());
         Point2D lastGL = mapToGL(lastMousePos.x(), lastMousePos.y());
         
@@ -204,7 +264,7 @@ void glWindow::mouseMoveEvent(QMouseEvent *event) {
         
         lastMousePos = event->pos();
         update();
-    } else if (isDragging) {
+    } else if (isDragging && currentShape != nullptr) {
         Point2D currentGL = mapToGL(event->pos().x(), event->pos().y());
         Point2D lastGL = mapToGL(lastMousePos.x(), lastMousePos.y());
         

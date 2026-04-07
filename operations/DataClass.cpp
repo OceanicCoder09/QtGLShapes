@@ -1,7 +1,15 @@
 #include "DataClass.h"
 #include <fstream>
 #include <iostream>
-#include <cmath>
+#include <set>
+
+struct VertexCompare {
+    bool operator()(const Vertex3D& a, const Vertex3D& b) const {
+        if (a.x != b.x) return a.x < b.x;
+        if (a.y != b.y) return a.y < b.y;
+        return a.z < b.z;
+    }
+};
 
 void DataClass::loadSTL(std::string filename) {
     std::ifstream file(filename);
@@ -13,7 +21,7 @@ void DataClass::loadSTL(std::string filename) {
 
     std::string word;
     std::vector<Vertex3D> temp;
-    std::vector<Vertex3D> uniqueVertices;
+    std::set<Vertex3D, VertexCompare> uniqueVertices;
 
     while (file >> word) {
 
@@ -21,17 +29,13 @@ void DataClass::loadSTL(std::string filename) {
             Vertex3D v;
             file >> v.x >> v.y >> v.z;
 
-            bool found = false;
-            for (auto &u : uniqueVertices) {
-                if (u.x == v.x && u.y == v.y && u.z == v.z) {
-                    v = u;
-                    found = true;
-                    break;
-                }
+            // avoid duplicate vertices
+            auto it = uniqueVertices.find(v);
+            if (it == uniqueVertices.end()) {
+                uniqueVertices.insert(v);
             }
-
-            if (!found) {
-                uniqueVertices.push_back(v);
+            else {
+                v = *it;
             }
 
             temp.push_back(v);
@@ -47,7 +51,4 @@ void DataClass::loadSTL(std::string filename) {
             }
         }
     }
-
-    std::cout << "Total triangles: " << triangles.size() << std::endl;
-    std::cout << "Unique vertices: " << uniqueVertices.size() << std::endl;
-}
+}          

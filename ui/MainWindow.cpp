@@ -26,12 +26,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     QPushButton *clearBtn = new QPushButton("Clear", this);
     QPushButton *convert3DBtn = new QPushButton("Convert to 3D", this);
     QPushButton *exportBtn = new QPushButton("Export STL", this);
+    QPushButton *importBtn = new QPushButton("Import STL", this);
     
     topLayout->addWidget(shapeLabel);
     topLayout->addWidget(shapeCombo);
     topLayout->addWidget(clearBtn);
     topLayout->addWidget(convert3DBtn);
     topLayout->addWidget(exportBtn);
+    topLayout->addWidget(importBtn);
     topLayout->addStretch();
     
     mainLayout->addLayout(topLayout);
@@ -43,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     connect(clearBtn, SIGNAL(clicked()), this, SLOT(onClearClicked()));
     connect(convert3DBtn, SIGNAL(clicked()), this, SLOT(onConvertTo3DClicked()));
     connect(exportBtn, SIGNAL(clicked()), this, SLOT(onExportSTLClicked()));
+    connect(importBtn, SIGNAL(clicked()), this, SLOT(onImportSTLClicked()));
     
     resize(800, 600);
     setWindowTitle("2D Shapes");
@@ -74,4 +77,13 @@ void MainWindow::onExportSTLClicked() {
     } else {
         QMessageBox::warning(this, tr("Export Failed"), tr("Could not export shape. Please ensure you have placed a shape."));
     }
+}
+
+void MainWindow::onImportSTLClicked() {
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open ASCII STL"), "", tr("STL Files (*.stl);;All Files (*)"));
+    if (fileName.isEmpty()) {
+        return;
+    }
+    
+    glWidget->importSTL(fileName);
 }

@@ -4,6 +4,7 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include "Shape.h"
+#include "DataClass.h"
 
 class glWindow : public QOpenGLWidget, protected QOpenGLFunctions {
     Q_OBJECT
@@ -15,6 +16,7 @@ public:
     void clearShape();
     void convertTo3D();
     bool exportToSTL(const QString& filePath);
+    void importSTL(const QString& filePath);
 
 protected:
     void initializeGL() override;
@@ -28,6 +30,7 @@ protected:
 private:
     int pendingShapeType;
     Shape* currentShape; 
+    DataClass* loadedMesh;
     bool isDragging;
     bool isScaling;
     bool isRotating;

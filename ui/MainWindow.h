@@ -18,6 +18,7 @@ private slots:
     void onClearClicked();
     void onConvertTo3DClicked();
     void onExportSTLClicked();
+    void onImportSTLClicked();
 
 private:
     glWindow *glWidget;
